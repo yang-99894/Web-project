@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const specialtyData = [
   // ===== 本科（普通教育） =====
@@ -23,7 +24,6 @@ const specialtyData = [
   { zymc: '英语', xk: '外国语言文学类', mlmc: '文学', cc: '本科', myd: 3.9, evlNum: 17600, zhzs: 4.0, pf: 7.8, cyfx: '翻译、外贸、教育培训、国际交流、跨境电商', zzzs: 'TEM-8（专八）、CATTI翻译资格证、TESOL' },
   { zymc: '汉语言文学', xk: '中国语言文学类', mlmc: '文学', cc: '本科', myd: 4.1, evlNum: 13200, zhzs: 4.2, pf: 8.2, cyfx: '教师、编辑、文案策划、文化传媒、公务员', zzzs: '教师资格证、普通话等级证书、出版专业资格' },
   { zymc: '数学与应用数学', xk: '数学类', mlmc: '理学', cc: '本科', myd: 3.8, evlNum: 8900, zhzs: 3.9, pf: 7.8, cyfx: '教师、数据分析、金融建模、数理研究、精算', zzzs: '教师资格证、精算师、CDA数据分析师' },
-
   // ===== 本科（职业教育） =====
   { zymc: '大数据与会计', xk: '财务会计类', mlmc: '财经商贸', cc: '本科（职业教育）', myd: 4.9, evlNum: 203, zhzs: 4.8, pf: 9.5, cyfx: '财务数据分析、大数据审计、数字化财务、税务筹划', zzzs: '初级/中级会计师、CDA数据分析师、CPA' },
   { zymc: '电子商务', xk: '电子商务类', mlmc: '财经商贸', cc: '本科（职业教育）', myd: 4.9, evlNum: 161, zhzs: 4.8, pf: 9.5, cyfx: '电商运营、网络营销、跨境电商、直播电商、平台管理', zzzs: '电子商务师、跨境电商运营师、互联网营销师' },
@@ -55,7 +55,6 @@ const specialtyData = [
   { zymc: '应用韩语', xk: '语言类', mlmc: '教育与体育', cc: '本科（职业教育）', myd: 4.6, evlNum: 16, zhzs: 4.5, pf: 9.0, cyfx: '韩语翻译、对韩外贸、韩企文秘、跨境电商、旅游服务', zzzs: 'TOPIK（韩语能力考试中/高级）、CATTI翻译资格' },
   { zymc: '数字媒体技术', xk: '计算机类', mlmc: '电子与信息', cc: '本科（职业教育）', myd: 5.0, evlNum: 15, zhzs: 4.9, pf: 9.8, cyfx: '数字媒体开发、交互设计、前端开发、UI设计、多媒体制作', zzzs: 'Adobe认证设计师、前端开发工程师认证、AIGC创作师' },
   { zymc: '电气工程及自动化', xk: '自动化类', mlmc: '装备制造', cc: '本科（职业教育）', myd: 4.5, evlNum: 10, zhzs: 4.4, pf: 9.0, cyfx: '电气设计、PLC编程、工业自动化、供配电、新能源', zzzs: '电气工程师、注册电气工程师、电工特种作业操作证' },
-
   // ===== 高职（专科） =====
   { zymc: '大数据与会计', xk: '财务会计类', mlmc: '财经商贸', cc: '高职（专科）', myd: 4.3, evlNum: 126234, zhzs: 4.3, pf: 8.5, cyfx: '会计核算、出纳、财务软件操作、税务申报、审计助理', zzzs: '初级会计师、财务数字化认证、1+X智能财税证书' },
   { zymc: '护理', xk: '护理类', mlmc: '医药卫生', cc: '高职（专科）', myd: 4.3, evlNum: 125281, zhzs: 4.2, pf: 8.6, cyfx: '临床护理、社区护理、养老护理、康复护理、医美护理', zzzs: '护士执业资格证、养老护理员、健康管理师' },
@@ -106,14 +105,6 @@ const specialtyData = [
 
 const pageSize = 10;
 
-const footerLinks = [
-  { label: '智绘职途', url: '#' },
-  { label: '版权声明', url: '#' },
-  { label: '鸣谢单位', url: '#' },
-  { label: '关于我们', url: '#' },
-  { label: '联系我们', url: '#' },
-];
-
 function Speciality() {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -157,11 +148,10 @@ function Speciality() {
   const renderStars = (score) => {
     const full = Math.floor(score);
     const half = score - full >= 0.5 ? 1 : 0;
-    const empty = 5 - full - half;
     return (
-      <span style={{ color: '#4167B1', fontSize: '13px' }}>
-        {'★'.repeat(full)}{half ? '★' : ''}{'☆'.repeat(empty)}
-        <span style={{ color: '#5a6a7a', marginLeft: '6px' }}>{score.toFixed(1)}</span>
+      <span className="text-primary text-[13px]">
+        {'★'.repeat(full)}{half ? '★' : ''}{'☆'.repeat(5 - full - half)}
+        <span className="text-muted-foreground ml-1.5">{score.toFixed(1)}</span>
       </span>
     );
   };
@@ -169,56 +159,42 @@ function Speciality() {
   const renderRating = (score) => {
     const full = Math.floor(score / 2);
     const half = (score / 2) - full >= 0.5 ? 1 : 0;
-    const empty = 5 - full - half;
     return (
-      <span style={{ color: '#F5A623', fontSize: '13px' }}>
-        {'★'.repeat(full)}{half ? '★' : ''}{'☆'.repeat(empty)}
-        <span style={{ color: '#1B1F23', marginLeft: '6px', fontWeight: 600 }}>{score.toFixed(1)}</span>
+      <span className="text-amber-500 text-[13px]">
+        {'★'.repeat(full)}{half ? '★' : ''}{'☆'.repeat(5 - full - half)}
+        <span className="text-foreground ml-1.5 font-semibold">{score.toFixed(1)}</span>
       </span>
     );
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#e3ecf7', color: '#1B1F23' }}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
 
-      {/* ========== 主体内容 ========== */}
       <div className="flex-1">
         <div className="mx-auto py-10" style={{ width: '1180px' }}>
           <div className="mb-8">
             <img src="/images/dongcha.png" alt="洞察" className="w-full rounded-2xl" />
           </div>
 
-          {/* ===== 搜索区域 ===== */}
-          <div className="mb-8 p-8 rounded-2xl" style={{
-            backgroundColor: '#ffffff',
-            border: '1px solid rgba(65,103,177,0.15)',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-          }}>
-            <h2 className="text-2xl font-bold mb-6" style={{ color: '#1B1F23' }}>
-              <span className="w-[4px] h-6 rounded-full inline-block align-middle mr-3" style={{ backgroundColor: '#4167B1' }} />
+          <div className="mb-8 p-8 rounded-2xl bg-card border border-border shadow-sm">
+            <h2 className="text-2xl font-bold mb-6 text-foreground">
+              <span className="w-1 h-6 rounded-full inline-block align-middle mr-3 bg-primary" />
               专业查询
             </h2>
             <div className="flex items-center gap-3">
-              <div style={{ position: 'relative', flex: 1 }}>
+              <div className="relative flex-1">
                 <input
                   type="text"
                   placeholder="输入专业名称、专业类或专业大类进行搜索"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="outline-none px-5 py-3 text-base w-full rounded-xl transition-all duration-200"
-                  style={{
-                    border: '1px solid rgba(65,103,177,0.25)',
-                    color: '#1B1F23',
-                    backgroundColor: '#e3ecf7',
-                    paddingRight: '50px',
-                  }}
+                  className="outline-none px-5 py-3 text-base w-full rounded-xl transition-all duration-200 border border-primary/25 text-foreground bg-background pr-[50px]"
                 />
                 <svg
                   viewBox="0 0 20 20"
-                  className="w-5 h-5 absolute"
-                  style={{ right: '16px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(65,103,177,0.5)' }}
+                  className="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-primary/50"
                   fill="none" stroke="currentColor" strokeWidth="1.5"
                 >
                   <circle cx="8.5" cy="8.5" r="7" /><path d="M13.5 13.5L18 18" strokeLinecap="round" />
@@ -226,104 +202,72 @@ function Speciality() {
               </div>
               <button
                 onClick={handleSearch}
-                className="px-8 py-3 rounded-xl text-base font-medium transition-all duration-200 border-none cursor-pointer"
-                style={{
-                  color: '#ffffff',
-                  backgroundColor: '#4167B1',
-                  boxShadow: '0 4px 16px rgba(65,103,177,0.25)',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 6px 20px rgba(65,103,177,0.35)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(65,103,177,0.25)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-              >
+                className="px-8 py-3 rounded-xl text-base font-medium transition-all duration-200 border-none cursor-pointer bg-primary text-primary-foreground shadow-md hover:-translate-y-px hover:shadow-lg">
                 查询
               </button>
             </div>
             <div className="mt-4 flex gap-2">
-              <span className="text-sm" style={{ color: '#5a6a7a' }}>热门搜索：</span>
+              <span className="text-sm text-muted-foreground">热门搜索：</span>
               {['计算机科学与技术', '临床医学', '法学', '人工智能'].map((tag) => (
                 <button
                   key={tag}
                   onClick={() => { setSearchText(tag); setCurrentPage(1); }}
-                  className="px-3 py-1 text-sm rounded-full cursor-pointer border-none transition-all duration-150"
-                  style={{
-                    color: '#4167B1',
-                    backgroundColor: 'rgba(65,103,177,0.06)',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.12)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.06)'; }}
-                >
+                  className="px-3 py-1 text-sm rounded-full cursor-pointer border-none transition-all duration-150 text-primary bg-primary/6 hover:bg-primary/12">
                   {tag}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* ===== 专业列表 ===== */}
           <div className="space-y-3">
             {currentPageData.map((item, i) => (
               <div
                 key={i}
-                className="flex rounded-xl p-5 transition-all duration-200 cursor-pointer"
-                style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid rgba(65,103,177,0.10)',
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.03)',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(65,103,177,0.12)'; e.currentTarget.style.borderColor = 'rgba(65,103,177,0.25)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.03)'; e.currentTarget.style.borderColor = 'rgba(65,103,177,0.10)'; }}
-              >
+                className="flex rounded-xl p-5 transition-all duration-200 cursor-pointer bg-card border border-border shadow-sm hover:-translate-y-0.5 hover:shadow-md hover:border-primary/25">
                 <div className="flex-1 min-w-0">
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>专业名称</span>
-                    <a href="#" className="text-sm font-semibold" style={{ color: '#4167B1', textDecoration: 'none' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.textDecoration = 'underline'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.textDecoration = 'none'; }}
-                    >{item.zymc}</a>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业名称</span>
+                    <a href="#" className="text-sm font-semibold text-primary hover:underline no-underline">{item.zymc}</a>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>专业类</span>
-                    <span className="text-sm" style={{ color: '#1B1F23' }}>{item.xk}</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业类</span>
+                    <span className="text-sm text-foreground">{item.xk}</span>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>专业大类</span>
-                    <span className="text-sm" style={{ color: '#1B1F23' }}>{item.mlmc}</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业大类</span>
+                    <span className="text-sm text-foreground">{item.mlmc}</span>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>学历层次</span>
-                    <span className="text-sm" style={{ color: '#1B1F23' }}>{item.cc}</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">学历层次</span>
+                    <span className="text-sm text-foreground">{item.cc}</span>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>综合满意度</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">综合满意度</span>
                     <span>{renderStars(item.myd)}</span>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>评价人数</span>
-                    <span className="text-sm" style={{ color: '#1B1F23' }}>{item.evlNum.toLocaleString()}</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">评价人数</span>
+                    <span className="text-sm text-foreground">{item.evlNum.toLocaleString()}</span>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>专业评分</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业评分</span>
                     <span>{renderRating(item.pf)}</span>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>从业方向</span>
-                    <span className="text-sm" style={{ color: '#1B1F23', lineHeight: '1.6' }}>{item.cyfx}</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">从业方向</span>
+                    <span className="text-sm text-foreground leading-relaxed">{item.cyfx}</span>
                   </div>
                   <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0" style={{ color: '#5a6a7a', width: '80px' }}>资质证书</span>
-                    <span className="text-sm" style={{ color: '#1B1F23', lineHeight: '1.6' }}>{item.zzzs}</span>
+                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">资质证书</span>
+                    <span className="text-sm text-foreground leading-relaxed">{item.zzzs}</span>
                   </div>
                 </div>
               </div>
             ))}
 
             {currentPageData.length === 0 && (
-              <div className="py-16 text-center rounded-2xl" style={{
-                backgroundColor: '#ffffff',
-                border: '1px solid rgba(65,103,177,0.15)',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                color: '#5a6a7a',
-              }}>
-                <svg viewBox="0 0 24 24" className="w-12 h-12 mx-auto mb-4" style={{ color: 'rgba(65,103,177,0.2)' }} fill="none" stroke="currentColor" strokeWidth="1">
+              <div className="py-16 text-center rounded-2xl bg-card border border-border shadow-sm text-muted-foreground">
+                <svg viewBox="0 0 24 24" className="w-12 h-12 mx-auto mb-4 text-primary/20" fill="none" stroke="currentColor" strokeWidth="1">
                   <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
                 </svg>
                 <p className="text-base">未找到相关专业，请尝试其他关键词</p>
@@ -331,112 +275,42 @@ function Speciality() {
             )}
           </div>
 
-          {/* ===== 分页 ===== */}
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2 mt-6">
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                style={{
-                  color: currentPage === 1 ? '#5a6a7a' : '#4167B1',
-                  backgroundColor: currentPage === 1 ? '#e3ecf7' : '#ffffff',
-                  cursor: currentPage === 1 ? 'default' : 'pointer',
-                  border: '1px solid rgba(65,103,177,0.15)',
-                }}
-              >
+                className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
                 上一页
               </button>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className="w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
+                  className="w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 font-normal border border-border bg-card text-foreground"
                   style={{
-                    color: page === currentPage ? '#ffffff' : '#1B1F23',
-                    backgroundColor: page === currentPage ? '#4167B1' : '#ffffff',
+                    color: page === currentPage ? 'var(--primary-foreground)' : undefined,
+                    backgroundColor: page === currentPage ? 'var(--primary)' : undefined,
                     fontWeight: page === currentPage ? '600' : '400',
-                    border: page === currentPage ? 'none' : '1px solid rgba(65,103,177,0.15)',
-                  }}
-                >
+                  }}>
                   {page}
                 </button>
               ))}
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                style={{
-                  color: currentPage === totalPages ? '#5a6a7a' : '#4167B1',
-                  backgroundColor: currentPage === totalPages ? '#e3ecf7' : '#ffffff',
-                  cursor: currentPage === totalPages ? 'default' : 'pointer',
-                  border: '1px solid rgba(65,103,177,0.15)',
-                }}
-              >
+                className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
                 下一页
               </button>
-              <span className="text-sm ml-2" style={{ color: '#5a6a7a' }}>
+              <span className="text-sm ml-2 text-muted-foreground">
                 共 {filteredData.length} 条
               </span>
             </div>
           )}
-
-
         </div>
       </div>
 
-      {/* ========== 底部页脚 ========== */}
-      <div style={{ backgroundColor: '#e3ecf7', borderTop: '1px solid rgba(65,103,177,0.12)' }}>
-        <div className="mx-auto relative" style={{ width: '1180px', height: '198px', fontSize: '14px', lineHeight: '30px' }}>
-          <div className="absolute" style={{ top: '32px', left: '0' }}>
-            {footerLinks.map((link, i) => (
-              <React.Fragment key={i}>
-                <a href={link.url} target="_blank" rel="noopener noreferrer"
-                  className="transition-all duration-200 text-sm" style={{ color: '#1B1F23', marginRight: '20px' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#4167B1'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = '#1B1F23'; }}>
-                  {link.label}
-                </a>
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="absolute" style={{ top: '75px', left: '0', color: '#5a6a7a', fontSize: '13px' }}>
-            主办单位：
-            <a href="#" target="_blank" rel="noopener noreferrer"
-              className="transition-all duration-200" style={{ color: '#5a6a7a' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#4167B1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#5a6a7a'; }}>
-              AI智研创新协会
-            </a>
-            <br />
-            Copyright &copy; 2003-2026 <a href="#" target="_blank" rel="noopener noreferrer"
-              className="transition-all duration-200" style={{ color: '#5a6a7a' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#4167B1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#5a6a7a'; }}>智绘职途</a> All Rights Reserved
-
-          </div>
-
-          <div className="absolute text-center" style={{ top: '42px', right: '0', color: '#1B1F23' }}>
-            <div className="flex items-center justify-center mb-2">
-              <div className="flex items-center justify-center" style={{
-                width: '72px', height: '72px', borderRadius: '12px',
-                backgroundColor: 'rgba(65,103,177,0.15)',
-              }}>
-                <div className="text-center">
-                  <svg className="w-5 h-5 mx-auto" viewBox="0 0 24 24" fill="none" style={{ color: '#4167B1' }}>
-                    <rect x="2" y="2" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                    <rect x="14" y="2" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                    <rect x="2" y="14" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                    <rect x="14" y="14" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  </svg>
-                  <span className="text-xs mt-1 block" style={{ color: '#4167B1' }}>二维码</span>
-                </div>
-              </div>
-            </div>
-            <div className="text-xs" style={{ color: '#4167B1', letterSpacing: '1px' }}>官方微信</div>
-          </div>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }

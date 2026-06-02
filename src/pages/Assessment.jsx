@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const questions = {
   preference: [
@@ -185,53 +186,46 @@ function Assessment() {
           <div className="flex items-center gap-1.5">
             <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200"
               style={{
-                color: i <= step ? '#ffffff' : '#5a6a7a',
-                backgroundColor: i <= step ? '#4167B1' : 'rgba(65,103,177,0.12)',
+                color: i <= step ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                backgroundColor: i <= step ? 'var(--primary)' : 'var(--accent)',
               }}>
               {i < step ? '✓' : i + 1}
             </div>
-            <span className="text-xs" style={{ color: i <= step ? '#4167B1' : '#5a6a7a' }}>{title}</span>
+            <span className="text-xs" style={{ color: i <= step ? 'var(--primary)' : 'var(--muted-foreground)' }}>{title}</span>
           </div>
           {i < sectionTitles.length - 1 && (
-            <div className="w-8 h-0.5" style={{ backgroundColor: i < step ? '#4167B1' : 'rgba(65,103,177,0.15)' }} />
+            <div className="w-8 h-0.5" style={{ backgroundColor: i < step ? 'var(--primary)' : 'var(--border)' }} />
           )}
         </React.Fragment>
       ))}
     </div>
   );
 
+  const btnClass = (selected) => selected
+    ? 'bg-primary text-primary-foreground border-2 border-primary'
+    : 'bg-primary/5 text-foreground border-2 border-transparent';
+
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#e3ecf7', color: '#1B1F23' }}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
       <div className="flex-1">
-        <div className="mx-auto py-10" style={{ width: '900px' }}>
-          <h2 className="text-2xl font-bold text-center mb-2" style={{ color: '#1B1F23' }}>职业测评</h2>
-          <p className="text-sm text-center mb-8" style={{ color: '#5a6a7a' }}>完成以下5个步骤，获取专属于你的职业推荐清单</p>
+        <div className="mx-auto py-10 w-[900px]">
+          <h2 className="text-2xl font-bold text-center mb-2 text-foreground">职业测评</h2>
+          <p className="text-sm text-center mb-8 text-muted-foreground">完成以下5个步骤，获取专属于你的职业推荐清单</p>
 
           {renderStepIndicator()}
 
-          <div className="rounded-2xl p-8" style={{
-            backgroundColor: '#ffffff',
-            border: '1px solid rgba(65,103,177,0.15)',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-            minHeight: '420px',
-          }}>
-            {/* Step 0: 工作偏好 */}
+          <div className="rounded-2xl p-8 bg-card border border-border shadow-sm min-h-[420px]">
             {step === 0 && (
               <div>
-                <h3 className="text-lg font-bold mb-6" style={{ color: '#1B1F23' }}>工作偏好</h3>
+                <h3 className="text-lg font-bold mb-6 text-foreground">工作偏好</h3>
                 {questions.preference.map((item, i) => (
-                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.preference.length - 1 ? '1px solid rgba(65,103,177,0.06)' : 'none' }}>
-                    <p className="text-sm font-medium mb-3" style={{ color: '#1B1F23' }}>{i + 1}. {item.q}</p>
+                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.preference.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                    <p className="text-sm font-medium mb-3 text-foreground">{i + 1}. {item.q}</p>
                     <div className="flex gap-3">
                       {item.opts.map((opt, j) => (
                         <button key={j} onClick={() => handlePrefChange(i, j)}
-                          className="flex-1 py-3 px-4 rounded-xl text-sm border-none cursor-pointer transition-all duration-150"
-                          style={{
-                            color: answers.preference[i] === j ? '#ffffff' : '#1B1F23',
-                            backgroundColor: answers.preference[i] === j ? '#4167B1' : 'rgba(65,103,177,0.05)',
-                            border: answers.preference[i] === j ? '2px solid #4167B1' : '2px solid transparent',
-                          }}>
+                          className={`flex-1 py-3 px-4 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 ${btnClass(answers.preference[i] === j)}`}>
                           {opt}
                         </button>
                       ))}
@@ -241,22 +235,16 @@ function Assessment() {
               </div>
             )}
 
-            {/* Step 1: 性格倾向 */}
             {step === 1 && (
               <div>
-                <h3 className="text-lg font-bold mb-6" style={{ color: '#1B1F23' }}>性格倾向</h3>
+                <h3 className="text-lg font-bold mb-6 text-foreground">性格倾向</h3>
                 {questions.personality.map((item, i) => (
-                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.personality.length - 1 ? '1px solid rgba(65,103,177,0.06)' : 'none' }}>
-                    <p className="text-sm font-medium mb-3" style={{ color: '#1B1F23' }}>{i + 1}. {item.q}</p>
+                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.personality.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                    <p className="text-sm font-medium mb-3 text-foreground">{i + 1}. {item.q}</p>
                     <div className="flex gap-3">
                       {item.opts.map((opt, j) => (
                         <button key={j} onClick={() => handlePersChange(i, j)}
-                          className="flex-1 py-3 px-4 rounded-xl text-sm border-none cursor-pointer transition-all duration-150"
-                          style={{
-                            color: answers.personality[i] === j ? '#ffffff' : '#1B1F23',
-                            backgroundColor: answers.personality[i] === j ? '#4167B1' : 'rgba(65,103,177,0.05)',
-                            border: answers.personality[i] === j ? '2px solid #4167B1' : '2px solid transparent',
-                          }}>
+                          className={`flex-1 py-3 px-4 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 ${btnClass(answers.personality[i] === j)}`}>
                           {opt}
                         </button>
                       ))}
@@ -266,79 +254,71 @@ function Assessment() {
               </div>
             )}
 
-            {/* Step 2: 职业兴趣 */}
             {step === 2 && (
               <div>
-                <h3 className="text-lg font-bold mb-6" style={{ color: '#1B1F23' }}>职业兴趣（1-5分评分）</h3>
+                <h3 className="text-lg font-bold mb-6 text-foreground">职业兴趣（1-5分评分）</h3>
                 {questions.interest.map((item, i) => (
-                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.interest.length - 1 ? '1px solid rgba(65,103,177,0.06)' : 'none' }}>
-                    <p className="text-sm font-medium mb-3" style={{ color: '#1B1F23' }}>{i + 1}. {item.q}</p>
+                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.interest.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                    <p className="text-sm font-medium mb-3 text-foreground">{i + 1}. {item.q}</p>
                     <div className="flex items-center gap-3">
-                      <span className="text-xs" style={{ color: '#5a6a7a' }}>不符合</span>
+                      <span className="text-xs text-muted-foreground">不符合</span>
                       {[1, 2, 3, 4, 5].map(v => (
                         <button key={v} onClick={() => handleInterestChange(i, v)}
                           className="w-10 h-10 rounded-full text-sm border-none cursor-pointer transition-all duration-150 font-medium"
                           style={{
-                            color: answers.interest[i] >= v ? '#ffffff' : '#4167B1',
-                            backgroundColor: answers.interest[i] >= v ? '#4167B1' : 'rgba(65,103,177,0.08)',
+                            color: answers.interest[i] >= v ? 'var(--primary-foreground)' : 'var(--primary)',
+                            backgroundColor: answers.interest[i] >= v ? 'var(--primary)' : 'var(--accent)',
                           }}>
                           {v}
                         </button>
                       ))}
-                      <span className="text-xs" style={{ color: '#5a6a7a' }}>非常符合</span>
+                      <span className="text-xs text-muted-foreground">非常符合</span>
                     </div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Step 3: 能力自评 */}
             {step === 3 && (
               <div>
-                <h3 className="text-lg font-bold mb-6" style={{ color: '#1B1F23' }}>能力自评（1-5分，3分为平均水平）</h3>
+                <h3 className="text-lg font-bold mb-6 text-foreground">能力自评（1-5分，3分为平均水平）</h3>
                 {questions.ability.map((item, i) => (
-                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.ability.length - 1 ? '1px solid rgba(65,103,177,0.06)' : 'none' }}>
+                  <div key={i} className="mb-5 pb-5" style={{ borderBottom: i < questions.ability.length - 1 ? '1px solid var(--border)' : 'none' }}>
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-medium" style={{ color: '#1B1F23' }}>{item.label}</p>
-                      <span className="text-sm font-bold" style={{ color: '#4167B1' }}>{answers.ability[i]} 分</span>
+                      <p className="text-sm font-medium text-foreground">{item.label}</p>
+                      <span className="text-sm font-bold text-primary">{answers.ability[i]} 分</span>
                     </div>
-                    <p className="text-xs mb-3" style={{ color: '#5a6a7a' }}>{item.desc}</p>
+                    <p className="text-xs mb-3 text-muted-foreground">{item.desc}</p>
                     <input
                       type="range" min="1" max="5" value={answers.ability[i]}
                       onChange={(e) => handleAbilityChange(i, parseInt(e.target.value))}
-                      className="w-full"
-                      style={{ accentColor: '#4167B1', height: '6px' }}
+                      className="w-full h-1.5"
+                      style={{ accentColor: 'var(--primary)' }}
                     />
                     <div className="flex justify-between mt-1">
-                      <span className="text-xs" style={{ color: '#5a6a7a' }}>较弱</span>
-                      <span className="text-xs" style={{ color: '#5a6a7a' }}>一般</span>
-                      <span className="text-xs" style={{ color: '#5a6a7a' }}>较强</span>
-                      <span className="text-xs" style={{ color: '#5a6a7a' }}>很强</span>
-                      <span className="text-xs" style={{ color: '#5a6a7a' }}>卓越</span>
+                      <span className="text-xs text-muted-foreground">较弱</span>
+                      <span className="text-xs text-muted-foreground">一般</span>
+                      <span className="text-xs text-muted-foreground">较强</span>
+                      <span className="text-xs text-muted-foreground">很强</span>
+                      <span className="text-xs text-muted-foreground">卓越</span>
                     </div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Step 4: 职业价值观 */}
             {step === 4 && (
               <div>
-                <h3 className="text-lg font-bold mb-2" style={{ color: '#1B1F23' }}>职业价值观</h3>
-                <p className="text-sm mb-6" style={{ color: '#5a6a7a' }}>选择你最看重的3个职业价值观（已选 {answers.values.length}/3）</p>
+                <h3 className="text-lg font-bold mb-2 text-foreground">职业价值观</h3>
+                <p className="text-sm mb-6 text-muted-foreground">选择你最看重的3个职业价值观（已选 {answers.values.length}/3）</p>
                 <div className="grid grid-cols-4 gap-3">
                   {questions.values.map((item, i) => {
                     const selected = answers.values.includes(item.label);
                     return (
                       <button key={i} onClick={() => handleValueToggle(item.label)}
-                        className="py-4 px-3 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 flex flex-col items-center gap-2"
-                        style={{
-                          color: selected ? '#ffffff' : '#1B1F23',
-                          backgroundColor: selected ? '#4167B1' : 'rgba(65,103,177,0.05)',
-                          border: selected ? '2px solid #4167B1' : '2px solid transparent',
-                          opacity: !selected && answers.values.length >= 3 ? 0.5 : 1,
-                        }}>
-                        <span style={{ fontSize: '24px' }}>{item.icon}</span>
+                        className={`py-4 px-3 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 flex flex-col items-center gap-2 ${btnClass(selected)}`}
+                        style={{ opacity: !selected && answers.values.length >= 3 ? 0.5 : 1 }}>
+                        <span className="text-2xl">{item.icon}</span>
                         <span className="font-medium">{item.label}</span>
                       </button>
                     );
@@ -348,43 +328,33 @@ function Assessment() {
             )}
           </div>
 
-          {/* Navigation Buttons */}
           <div className="flex justify-between mt-6">
             <button onClick={() => setStep(s => Math.max(0, s - 1))}
               disabled={step === 0}
-              className="px-6 py-3 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 font-medium"
-              style={{
-                color: step === 0 ? '#5a6a7a' : '#4167B1',
-                backgroundColor: step === 0 ? 'rgba(65,103,177,0.04)' : 'rgba(65,103,177,0.08)',
-                cursor: step === 0 ? 'default' : 'pointer',
-              }}>
+              className="px-6 py-3 rounded-xl text-sm border-none transition-all duration-150 font-medium bg-primary/8 text-primary disabled:bg-primary/4 disabled:text-muted-foreground disabled:cursor-default cursor-pointer">
               上一步
             </button>
 
             {step < 4 ? (
               <button onClick={() => setStep(s => s + 1)}
                 disabled={!canNext()}
-                className="px-8 py-3 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 font-medium"
+                className="px-8 py-3 rounded-xl text-sm border-none transition-all duration-150 font-medium text-primary-foreground shadow-md cursor-pointer"
                 style={{
-                  color: '#ffffff',
-                  backgroundColor: canNext() ? '#4167B1' : 'rgba(65,103,177,0.3)',
+                  backgroundColor: canNext() ? 'var(--primary)' : 'var(--primary)',
+                  opacity: canNext() ? 1 : 0.3,
                   cursor: canNext() ? 'pointer' : 'default',
-                  boxShadow: canNext() ? '0 4px 16px rgba(65,103,177,0.25)' : 'none',
                 }}>
                 下一步
               </button>
             ) : (
               <button onClick={handleSubmit}
                 disabled={!canNext()}
-                className="px-8 py-3 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 font-medium"
+                className="px-8 py-3 rounded-xl text-sm border-none transition-all duration-150 font-medium text-primary-foreground shadow-md cursor-pointer hover:-translate-y-0.5 hover:shadow-lg"
                 style={{
-                  color: '#ffffff',
-                  backgroundColor: canNext() ? '#4167B1' : 'rgba(65,103,177,0.3)',
+                  backgroundColor: canNext() ? 'var(--primary)' : 'var(--primary)',
+                  opacity: canNext() ? 1 : 0.3,
                   cursor: canNext() ? 'pointer' : 'default',
-                  boxShadow: canNext() ? '0 4px 16px rgba(65,103,177,0.25)' : 'none',
-                }}
-                onMouseEnter={(e) => { if (canNext()) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(65,103,177,0.35)'; } }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(65,103,177,0.25)'; }}>
+                }}>
                 完成填写，提交
               </button>
             )}
@@ -392,21 +362,7 @@ function Assessment() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div style={{ backgroundColor: '#e3ecf7', borderTop: '1px solid rgba(65,103,177,0.12)' }}>
-        <div className="mx-auto relative" style={{ width: '900px', height: '120px', fontSize: '14px', lineHeight: '30px' }}>
-          <div className="absolute" style={{ top: '32px', left: '0', color: '#5a6a7a', fontSize: '13px' }}>
-            主办单位：
-            <a href="#" target="_blank" rel="noopener noreferrer"
-              className="transition-all duration-200" style={{ color: '#5a6a7a' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#4167B1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#5a6a7a'; }}>AI智研创新协会</a>
-            <br />
-            Copyright &copy; 2003-2026 智绘职途 All Rights Reserved
-          </div>
-
-        </div>
-      </div>
+      <Footer simple />
     </div>
   );
 }

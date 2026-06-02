@@ -73,20 +73,12 @@ function AIChat() {
   };
 
   return (
-    <div className="flex h-screen" style={{ backgroundColor: '#e3ecf7', color: '#1B1F23' }}>
-      {/* ===== 左侧边栏 (Kimi 风格) ===== */}
-      <div className="flex-shrink-0 flex flex-col transition-all duration-300" style={{
-        width: sidebarOpen ? '280px' : '0',
-        overflow: 'hidden',
-        backgroundColor: '#ffffff',
-        borderRight: sidebarOpen ? '1px solid rgba(65,103,177,0.10)' : 'none',
-      }}>
+    <div className="flex h-screen bg-background text-foreground">
+      <div className="flex-shrink-0 flex flex-col transition-all duration-300 overflow-hidden bg-card border-r border-border"
+        style={{ width: sidebarOpen ? '280px' : '0' }}>
         <div className="p-4 flex flex-col gap-2">
           <button onClick={newChat}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 border-none cursor-pointer"
-            style={{ color: '#ffffff', background: 'linear-gradient(135deg, #4167B1, #5B7FC9)' }}
-            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.9'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}>
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 border-none cursor-pointer bg-primary text-primary-foreground hover:brightness-90">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M12 5v14M5 12h14" strokeLinecap="round" />
             </svg>
@@ -97,20 +89,18 @@ function AIChat() {
         <div className="flex-1 overflow-y-auto">
           {history.length > 0 && (
             <div className="px-4 pb-1">
-              <span className="text-xs font-medium" style={{ color: '#5a6a7a' }}>对话历史</span>
+              <span className="text-xs font-medium text-muted-foreground">对话历史</span>
             </div>
           )}
           {history.map(item => (
             <div key={item.id}
               onClick={() => { setActiveChat(item.id); setShowWelcome(false); }}
-              className="mx-2 px-3 py-2.5 rounded-lg text-sm cursor-pointer transition-all duration-150 mb-0.5 flex items-center gap-3 truncate"
+              className="mx-2 px-3 py-2.5 rounded-lg text-sm cursor-pointer transition-all duration-150 mb-0.5 flex items-center gap-3 truncate text-foreground hover:bg-primary/4"
               style={{
-                backgroundColor: activeChat === item.id ? 'rgba(65,103,177,0.06)' : 'transparent',
-                color: '#1B1F23',
-              }}
-              onMouseEnter={(e) => { if (activeChat !== item.id) e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.04)'; }}
-              onMouseLeave={(e) => { if (activeChat !== item.id) e.currentTarget.style.backgroundColor = 'transparent'; }}>
-              <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: '#5a6a7a' }}>
+                backgroundColor: activeChat === item.id ? 'var(--primary)' : 'transparent',
+                color: activeChat === item.id ? 'var(--primary-foreground)' : undefined,
+              }}>
+              <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: activeChat === item.id ? 'var(--primary-foreground)' : 'var(--muted-foreground)' }}>
                 <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
               </svg>
               <span className="truncate text-xs">{item.title}</span>
@@ -118,54 +108,45 @@ function AIChat() {
           ))}
         </div>
 
-        <div className="p-4" style={{ borderTop: '1px solid rgba(65,103,177,0.10)' }}>
+        <div className="p-4 border-t border-border">
           <div className="flex items-center gap-3 px-2">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium"
-              style={{ backgroundColor: 'rgba(65,103,177,0.12)', color: '#4167B1' }}>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium bg-primary/12 text-primary">
               U
             </div>
-            <span className="text-sm" style={{ color: '#1B1F23' }}>用户</span>
+            <span className="text-sm text-foreground">用户</span>
           </div>
         </div>
       </div>
 
-      {/* ===== 右侧主区域 (Kimi 风格) ===== */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* 顶部导航栏 */}
-        <div className="flex-shrink-0 flex items-center justify-between px-6 py-3" style={{ borderBottom: '1px solid rgba(65,103,177,0.06)' }}>
+        <div className="flex-shrink-0 flex items-center justify-between px-6 py-3 border-b border-border/50">
           <button onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="w-8 h-8 rounded-lg border-none cursor-pointer flex items-center justify-center transition-all duration-150"
-            style={{ backgroundColor: 'transparent', color: '#5a6a7a' }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.06)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
+            className="w-8 h-8 rounded-lg border-none cursor-pointer flex items-center justify-center transition-all duration-150 bg-transparent text-muted-foreground hover:bg-primary/6">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 12h18M3 6h18M3 18h18" strokeLinecap="round" />
             </svg>
           </button>
           <div className="flex items-center gap-3">
-            <span className="text-sm font-medium" style={{ color: '#1B1F23' }}>AI 简历优化助手</span>
+            <span className="text-sm font-medium text-foreground">AI 简历优化助手</span>
           </div>
-          <div style={{ width: '32px' }} />
+          <div className="w-8" />
         </div>
 
-        {/* 聊天内容区域 */}
-        <div className="flex-1 overflow-y-auto" style={{ backgroundColor: '#e3ecf7' }}>
+        <div className="flex-1 overflow-y-auto bg-background">
           {showWelcome ? (
-            /* Welcome 界面 */
             <div className="flex flex-col items-center justify-center h-full px-6">
-              <div className="mb-6 w-20 h-20 rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #4167B1 0%, #5B7FC9 40%, #7B9FE0 100%)', boxShadow: '0 8px 32px rgba(65,103,177,0.25)' }}>
-                <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.5">
+              <div className="mb-6 w-20 h-20 rounded-2xl flex items-center justify-center bg-primary" style={{ boxShadow: '0 8px 32px var(--primary)' }}>
+                <svg className="w-10 h-10 text-primary-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M12 2a4 4 0 014 4c0 1.1-.4 2.1-1.2 2.8l1.6 1.6A6 6 0 0118 15v2H6v-2a6 6 0 014.6-5.6l1.6-1.6A4 4 0 018 6a4 4 0 014-4z" />
                   <path d="M9 18v2h6v-2" strokeLinecap="round" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-2" style={{ color: '#1B1F23' }}>AI 简历优化助手</h2>
-              <p className="text-sm mb-8" style={{ color: '#5a6a7a', maxWidth: '420px', textAlign: 'center', lineHeight: '1.6' }}>
+              <h2 className="text-2xl font-bold mb-2 text-foreground">AI 简历优化助手</h2>
+              <p className="text-sm mb-8 text-muted-foreground max-w-[420px] text-center leading-relaxed">
                 上传你的简历，AI 智能分析并优化，让你的简历在海量求职者中脱颖而出
               </p>
 
-              <div className="grid grid-cols-2 gap-3 mb-8" style={{ maxWidth: '560px', width: '100%' }}>
+              <div className="grid grid-cols-2 gap-3 mb-8 max-w-[560px] w-full">
                 {[
                   { icon: '📄', text: '帮我分析简历结构' },
                   { icon: '✏️', text: '优化简历语言表达' },
@@ -173,49 +154,38 @@ function AIChat() {
                   { icon: '📐', text: '推荐简历排版模板' },
                 ].map((item, i) => (
                   <button key={i} onClick={() => { setInput(item.text); inputRef.current?.focus(); }}
-                    className="flex items-center gap-3 px-5 py-4 rounded-xl text-sm border-none cursor-pointer transition-all duration-150"
-                    style={{
-                      backgroundColor: '#ffffff',
-                      border: '1px solid rgba(65,103,177,0.12)',
-                      color: '#1B1F23',
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(65,103,177,0.3)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(65,103,177,0.08)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(65,103,177,0.12)'; e.currentTarget.style.boxShadow = 'none'; }}>
-                    <span style={{ fontSize: '20px' }}>{item.icon}</span>
+                    className="flex items-center gap-3 px-5 py-4 rounded-xl text-sm border-none cursor-pointer transition-all duration-150 bg-card border border-border text-foreground hover:border-primary/30 hover:shadow-sm">
+                    <span className="text-xl">{item.icon}</span>
                     <span>{item.text}</span>
                   </button>
                 ))}
               </div>
             </div>
           ) : (
-            /* 消息列表 */
-            <div className="mx-auto px-6 pt-12 pb-8" style={{ maxWidth: '800px' }}>
+            <div className="mx-auto px-6 pt-12 pb-8 max-w-[800px]">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex mb-8 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className="flex gap-3" style={{ maxWidth: msg.role === 'user' ? '75%' : '100%' }}>
                     {msg.role === 'bot' && (
-                      <div className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
-                        style={{ background: 'linear-gradient(135deg, #4167B1 0%, #5B7FC9 40%, #7B9FE0 100%)' }}>
-                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2">
+                      <div className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-primary">
+                        <svg className="w-5 h-5 text-primary-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M12 2a4 4 0 014 4c0 1.1-.4 2.1-1.2 2.8l1.6 1.6A6 6 0 0118 15v2H6v-2a6 6 0 014.6-5.6l1.6-1.6A4 4 0 018 6a4 4 0 014-4z" />
                           <path d="M9 18v2h6v-2" strokeLinecap="round" />
                         </svg>
                       </div>
                     )}
                     <div className="min-w-0">
-                      <div className="rounded-2xl px-4 py-3 text-sm" style={{
-                        lineHeight: '1.8',
-                        whiteSpace: 'pre-wrap',
-                        color: msg.role === 'user' ? '#ffffff' : '#1B1F23',
-                        background: msg.role === 'user' ? '#4167B1' : '#ffffff',
-                        border: msg.role === 'bot' ? '1px solid rgba(65,103,177,0.08)' : 'none',
-                      }}>
+                      <div className="rounded-2xl px-4 py-3 text-sm whitespace-pre-wrap leading-relaxed"
+                        style={{
+                          color: msg.role === 'user' ? 'var(--primary-foreground)' : 'var(--foreground)',
+                          backgroundColor: msg.role === 'user' ? 'var(--primary)' : 'var(--card)',
+                          border: msg.role === 'bot' ? '1px solid var(--border)' : 'none',
+                        }}>
                         {msg.text}
                       </div>
                     </div>
                     {msg.role === 'user' && (
-                      <div className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-medium"
-                        style={{ backgroundColor: 'rgba(65,103,177,0.12)', color: '#4167B1' }}>
+                      <div className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-xs font-medium bg-primary/12 text-primary">
                         U
                       </div>
                     )}
@@ -227,48 +197,32 @@ function AIChat() {
           )}
         </div>
 
-        {/* 底部输入区 (Kimi 风格 - 简洁居中) */}
-        <div className="flex-shrink-0" style={{ backgroundColor: '#e3ecf7' }}>
-          <div className="mx-auto px-6 pb-10" style={{ maxWidth: '800px' }}>
-            <div className="flex items-end gap-2 px-5 py-5 rounded-2xl" style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid rgba(65,103,177,0.15)',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-            }}>
+        <div className="flex-shrink-0 bg-background">
+          <div className="mx-auto px-6 pb-10 max-w-[800px]">
+            <div className="flex items-end gap-2 px-5 py-5 rounded-2xl bg-card border border-border shadow-sm">
               <textarea ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={showWelcome ? '粘贴简历内容或输入你的问题...' : '继续输入...'}
                 rows={1}
-                className="flex-1 outline-none bg-transparent text-sm resize-none"
-                style={{
-                  color: '#1B1F23',
-                  lineHeight: '1.6',
-                  maxHeight: '120px',
-                  border: 'none',
-                  padding: '2px 0',
-                }}
+                className="flex-1 outline-none bg-transparent text-sm resize-none text-foreground leading-relaxed border-none p-0.5"
+                style={{ maxHeight: '120px' }}
                 onInput={(e) => {
                   e.target.style.height = 'auto';
                   e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
                 }} />
               <button onClick={handleSend}
                 disabled={!input.trim()}
-                className="flex-shrink-0 h-9 rounded-lg border-none cursor-pointer flex items-center justify-center gap-1.5 transition-all duration-150 px-3"
+                className="flex-shrink-0 h-9 rounded-lg border-none cursor-pointer flex items-center justify-center gap-1.5 transition-all duration-150 px-3 hover:scale-105"
                 style={{
-                  backgroundColor: input.trim() ? '#4167B1' : 'rgba(65,103,177,0.12)',
-                  color: input.trim() ? '#ffffff' : '#5a6a7a',
-                }}
-                onMouseEnter={(e) => { if (input.trim()) e.currentTarget.style.transform = 'scale(1.08)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}>
+                  backgroundColor: input.trim() ? 'var(--primary)' : 'var(--accent)',
+                  color: input.trim() ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                }}>
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 4l-8 8h5v8h6v-8h5z" />
                 </svg>
                 <span className="text-xs font-medium">发送</span>
               </button>
-              <label className="flex-shrink-0 w-9 h-9 rounded-lg cursor-pointer flex items-center justify-center transition-all duration-150"
-                style={{ color: '#5a6a7a', backgroundColor: 'rgba(65,103,177,0.06)' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.12)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.06)'; }}>
+              <label className="flex-shrink-0 w-9 h-9 rounded-lg cursor-pointer flex items-center justify-center transition-all duration-150 text-muted-foreground bg-primary/6 hover:bg-primary/12">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" strokeLinecap="round" />
                 </svg>
@@ -286,7 +240,7 @@ function AIChat() {
                   }} />
               </label>
             </div>
-            <p className="text-xs text-center mt-2.5" style={{ color: '#5a6a7a' }}>
+            <p className="text-xs text-center mt-2.5 text-muted-foreground">
               内容由 AI 生成，仅供参考
             </p>
           </div>

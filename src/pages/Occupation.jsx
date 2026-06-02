@@ -1,52 +1,20 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const industryMenu = [
-  {
-    hyMc: '互联网/通信',
-    kthzList: ['通信类', '计算机类'],
-  },
-  {
-    hyMc: '金融/贸易',
-    kthzList: ['金融类', '证券类', '保险类', '销售/商务类'],
-  },
-  {
-    hyMc: '建筑/工程/房地产服务',
-    kthzList: ['建筑类', '工程技术类', '生产制造类', '房地产服务类'],
-  },
-  {
-    hyMc: '医疗/生物/化工',
-    kthzList: ['医疗类', '化工环保类', '生物制药类'],
-  },
-  {
-    hyMc: '公务员/监察法律/社会服务',
-    kthzList: ['公务员类', '监察法律类', '社会服务类'],
-  },
-  {
-    hyMc: '教育/行政',
-    kthzList: ['教育类', '财务/行政类', '体育类'],
-  },
-  {
-    hyMc: '文艺与设计/传媒文化',
-    kthzList: ['传媒文化类', '文艺与设计类'],
-  },
-  {
-    hyMc: '交通/物流',
-    kthzList: ['交通运输类', '仓储物流类'],
-  },
-  {
-    hyMc: '住宿餐饮/旅游',
-    kthzList: ['住宿餐饮类', '旅游类'],
-  },
-  {
-    hyMc: '农林牧渔',
-    kthzList: ['农业类', '渔业类'],
-  },
-  {
-    hyMc: '青年创业者',
-    kthzList: ['青年创业者'],
-  },
+  { hyMc: '互联网/通信', kthzList: ['通信类', '计算机类'] },
+  { hyMc: '金融/贸易', kthzList: ['金融类', '证券类', '保险类', '销售/商务类'] },
+  { hyMc: '建筑/工程/房地产服务', kthzList: ['建筑类', '工程技术类', '生产制造类', '房地产服务类'] },
+  { hyMc: '医疗/生物/化工', kthzList: ['医疗类', '化工环保类', '生物制药类'] },
+  { hyMc: '公务员/监察法律/社会服务', kthzList: ['公务员类', '监察法律类', '社会服务类'] },
+  { hyMc: '教育/行政', kthzList: ['教育类', '财务/行政类', '体育类'] },
+  { hyMc: '文艺与设计/传媒文化', kthzList: ['传媒文化类', '文艺与设计类'] },
+  { hyMc: '交通/物流', kthzList: ['交通运输类', '仓储物流类'] },
+  { hyMc: '住宿餐饮/旅游', kthzList: ['住宿餐饮类', '旅游类'] },
+  { hyMc: '农林牧渔', kthzList: ['农业类', '渔业类'] },
+  { hyMc: '青年创业者', kthzList: ['青年创业者'] },
 ];
 
 const occupationData = [
@@ -100,7 +68,7 @@ function Occupation() {
   useEffect(() => {
     const stored = localStorage.getItem('assessmentResult');
     if (stored) {
-      try { setAssessmentResult(JSON.parse(stored)); } catch { /* ignore */ }
+      try { setAssessmentResult(JSON.parse(stored)); } catch { }
     }
   }, []);
 
@@ -132,145 +100,107 @@ function Occupation() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#e3ecf7', color: '#1B1F23' }}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
 
       <div className="flex-1">
         <div className="mx-auto py-10" style={{ width: '1180px' }}>
 
-          {/* ===== 顶部 Banner ===== */}
-          <div className="mb-8 p-10 rounded-2xl text-center relative overflow-hidden" style={{
-            background: 'linear-gradient(135deg, #4167B1 0%, #5B7FC9 40%, #7B9FE0 100%)',
-            boxShadow: '0 4px 24px rgba(65,103,177,0.25)',
-          }}>
-            <h2 className="text-3xl font-bold mb-4" style={{ color: '#ffffff' }}>你知道自己适合什么职业了吗？</h2>
-            <p className="text-base mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.85)', maxWidth: '760px' }}>
+          <div className="mb-8 p-10 rounded-2xl text-center relative overflow-hidden bg-primary shadow-lg">
+            <h2 className="text-3xl font-bold mb-4 text-primary-foreground">你知道自己适合什么职业了吗？</h2>
+            <p className="text-base mx-auto leading-relaxed text-primary-foreground/85 max-w-[760px]">
               小职这里根据大数据为你推荐了一些与你的专业、兴趣、价值观相匹配的职业，快去探索下职位的具体内容吧！同时你也可以通过搜索职业信息库，收藏喜欢的职业来确定自己的职业目标哦！
             </p>
           </div>
 
-          {/* ===== 我的职业推荐清单 ===== */}
-          <div className="mb-8 p-6 rounded-2xl" style={{
-            backgroundColor: '#ffffff',
-            border: '1px solid rgba(65,103,177,0.15)',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-          }}>
-            <h3 className="text-lg font-bold mb-5 flex items-center gap-2" style={{ color: '#1B1F23' }}>
-              <span className="w-1 h-5 rounded-full inline-block" style={{ backgroundColor: '#4167B1' }} />
+          <div className="mb-8 p-6 rounded-2xl bg-card border border-border shadow-sm">
+            <h3 className="text-lg font-bold mb-5 flex items-center gap-2 text-foreground">
+              <span className="w-1 h-5 rounded-full inline-block bg-primary" />
               我的职业推荐清单
             </h3>
             {assessmentResult ? (
               <div>
-                <div className="flex items-center gap-4 mb-5 p-4 rounded-xl" style={{ backgroundColor: 'rgba(65,103,177,0.04)' }}>
-                  <div className="flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold" style={{ color: '#ffffff', backgroundColor: '#4167B1' }}>
+                <div className="flex items-center gap-4 mb-5 p-4 rounded-xl bg-primary/4">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold bg-primary text-primary-foreground">
                     {assessmentResult.personalityType}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold" style={{ color: '#1B1F23' }}>
+                    <p className="text-sm font-semibold text-foreground">
                       你的性格类型：{assessmentResult.personalityLabel}（{assessmentResult.personalityType}）
                     </p>
-                    <p className="text-xs mt-1" style={{ color: '#5a6a7a' }}>
+                    <p className="text-xs mt-1 text-muted-foreground">
                       核心职业价值观：{assessmentResult.values.join('、')}
                     </p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {assessmentResult.topOccupations.map((occ, i) => (
-                    <a key={i} href="#" className="flex items-start gap-3 p-4 rounded-xl transition-all duration-150"
-                      style={{
-                        backgroundColor: 'rgba(65,103,177,0.03)',
-                        border: '1px solid rgba(65,103,177,0.08)',
-                        textDecoration: 'none',
-                      }}
-                      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(65,103,177,0.25)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(65,103,177,0.08)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                      <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                        style={{ color: '#ffffff', backgroundColor: i < 3 ? '#4167B1' : 'rgba(65,103,177,0.4)' }}>
+                    <a key={i} href="#" className="flex items-start gap-3 p-4 rounded-xl transition-all duration-150 bg-primary/3 border border-border/50 no-underline hover:border-primary/25 hover:-translate-y-0.5">
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-primary-foreground"
+                        style={{ backgroundColor: i < 3 ? 'var(--primary)' : 'var(--primary)' }}>
                         {i + 1}
                       </span>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-semibold" style={{ color: '#1B1F23' }}>{occ.title}</span>
-                          <span className="px-2 py-0.5 text-xs rounded" style={{ color: '#4167B1', backgroundColor: 'rgba(65,103,177,0.08)' }}>{occ.industrymc}</span>
+                          <span className="text-sm font-semibold text-foreground">{occ.title}</span>
+                          <span className="px-2 py-0.5 text-xs rounded text-primary bg-primary/8">{occ.industrymc}</span>
                         </div>
-                        <p className="text-xs" style={{ color: '#5a6a7a', lineHeight: '1.5' }}>{occ.reason}</p>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{occ.reason}</p>
                       </div>
                     </a>
                   ))}
                 </div>
-                <p className="text-xs text-center mt-4" style={{ color: '#5a6a7a' }}>
+                <p className="text-xs text-center mt-4 text-muted-foreground">
                   以上推荐基于你的性格类型、职业兴趣和能力自评结果生成，仅供参考。你可以重新
-                  <span onClick={() => navigate('/assessment')} className="cursor-pointer" style={{ color: '#4167B1' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.textDecoration = 'underline'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.textDecoration = 'none'; }}>进行测评</span>获取新的推荐。
+                  <span onClick={() => navigate('/assessment')} className="cursor-pointer text-primary hover:underline">进行测评</span>获取新的推荐。
                 </p>
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-sm mb-4" style={{ color: '#5a6a7a' }}>暂无推荐数据，请先完成职业测评获取专属推荐清单。</p>
-                <button onClick={() => navigate('/assessment')} className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium transition-all duration-200 border-none cursor-pointer"
-                  style={{ color: '#ffffff', backgroundColor: '#4167B1', boxShadow: '0 4px 16px rgba(65,103,177,0.25)' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(65,103,177,0.35)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(65,103,177,0.25)'; }}>
+                <p className="text-sm mb-4 text-muted-foreground">暂无推荐数据，请先完成职业测评获取专属推荐清单。</p>
+                <button onClick={() => navigate('/assessment')} className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-medium transition-all duration-200 border-none cursor-pointer bg-primary text-primary-foreground shadow-md hover:-translate-y-0.5 hover:shadow-lg">
                   去完成职业测评
-                  <span style={{ fontSize: '18px' }}>→</span>
+                  <span className="text-lg">→</span>
                 </button>
               </div>
             )}
           </div>
 
-          {/* ===== 探索更多感兴趣的职业 ===== */}
           <div>
-            <h3 className="text-lg font-bold mb-5 flex items-center gap-2" style={{ color: '#1B1F23' }}>
-              <span className="w-1 h-5 rounded-full inline-block" style={{ backgroundColor: '#4167B1' }} />
+            <h3 className="text-lg font-bold mb-5 flex items-center gap-2 text-foreground">
+              <span className="w-1 h-5 rounded-full inline-block bg-primary" />
               探索更多感兴趣的职业
             </h3>
 
             <div className="flex gap-6">
-              {/* 左侧主区域 */}
               <div className="flex-1 min-w-0">
-                {/* 搜索框 */}
                 <div className="mb-5 flex items-center gap-3">
-                  <div style={{ position: 'relative', flex: 1 }}>
+                  <div className="relative flex-1">
                     <input
                       type="text"
                       placeholder="输入职业"
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
-                      className="outline-none px-5 py-3 text-base w-full rounded-xl transition-all duration-200"
-                      style={{
-                        border: '1px solid rgba(65,103,177,0.25)',
-                        color: '#1B1F23',
-                        backgroundColor: '#e3ecf7',
-                        paddingRight: '60px',
-                      }}
+                      className="outline-none px-5 py-3 text-base w-full rounded-xl transition-all duration-200 border border-primary/25 text-foreground bg-background pr-[60px]"
                     />
                     <button
                       onClick={handleSearch}
-                      className="px-6 py-2 text-sm rounded-lg border-none cursor-pointer absolute font-medium transition-all duration-150"
-                      style={{ right: '6px', top: '6px', color: '#ffffff', backgroundColor: '#4167B1' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3557a0'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4167B1'; }}>
+                      className="px-6 py-2 text-sm rounded-lg border-none cursor-pointer absolute right-1.5 top-1.5 font-medium transition-all duration-150 bg-primary text-primary-foreground hover:brightness-90">
                       搜索
                     </button>
                   </div>
                 </div>
 
-                {/* 行业分类 */}
-                <div className="mb-4 p-5 rounded-2xl" style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid rgba(65,103,177,0.15)',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                }}>
+                <div className="mb-4 p-5 rounded-2xl bg-card border border-border shadow-sm">
                   <div className="flex items-start gap-3 mb-3">
-                    <span className="text-sm font-semibold flex-shrink-0 pt-1" style={{ color: '#1B1F23' }}>职业分类：</span>
+                    <span className="text-sm font-semibold flex-shrink-0 pt-1 text-foreground">职业分类：</span>
                     <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => handleFilterChange(-1, -1)}
                         className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
                         style={{
-                          color: hyIndex === -1 ? '#ffffff' : '#5a6a7a',
-                          backgroundColor: hyIndex === -1 ? '#4167B1' : 'rgba(65,103,177,0.06)',
+                          color: hyIndex === -1 ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                          backgroundColor: hyIndex === -1 ? 'var(--primary)' : 'var(--accent)',
                         }}>
                         全部
                       </button>
@@ -280,25 +210,24 @@ function Occupation() {
                           onClick={() => handleFilterChange(i, -1)}
                           className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
                           style={{
-                            color: hyIndex === i ? '#ffffff' : '#5a6a7a',
-                            backgroundColor: hyIndex === i ? '#4167B1' : 'rgba(65,103,177,0.06)',
+                            color: hyIndex === i ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                            backgroundColor: hyIndex === i ? 'var(--primary)' : 'var(--accent)',
                           }}>
                           {hy.hyMc}
                         </button>
                       ))}
                     </div>
                   </div>
-                  {/* 二级分类 */}
                   {hyIndex >= 0 && industryMenu[hyIndex].kthzList.length > 1 && (
-                    <div className="flex items-start gap-3 pt-3" style={{ borderTop: '1px solid rgba(65,103,177,0.08)' }}>
-                      <span className="text-sm font-semibold flex-shrink-0 pt-1" style={{ color: '#1B1F23' }}>职位类别：</span>
+                    <div className="flex items-start gap-3 pt-3 border-t border-border/50">
+                      <span className="text-sm font-semibold flex-shrink-0 pt-1 text-foreground">职位类别：</span>
                       <div className="flex flex-wrap gap-2">
                         <button
-                          onClick={() => handleFilterChange(hyIndex, -1)}
+                          onClick={() => { setKthzIndex(-1); setCurrentPage(1); }}
                           className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
                           style={{
-                            color: kthzIndex === -1 ? '#ffffff' : '#5a6a7a',
-                            backgroundColor: kthzIndex === -1 ? '#4167B1' : 'rgba(65,103,177,0.06)',
+                            color: kthzIndex === -1 ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                            backgroundColor: kthzIndex === -1 ? 'var(--primary)' : 'var(--accent)',
                           }}>
                           全部
                         </button>
@@ -308,8 +237,8 @@ function Occupation() {
                             onClick={() => { setKthzIndex(j); setCurrentPage(1); }}
                             className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
                             style={{
-                              color: kthzIndex === j ? '#ffffff' : '#5a6a7a',
-                              backgroundColor: kthzIndex === j ? '#4167B1' : 'rgba(65,103,177,0.06)',
+                              color: kthzIndex === j ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                              backgroundColor: kthzIndex === j ? 'var(--primary)' : 'var(--accent)',
                             }}>
                             {kthz}
                           </button>
@@ -319,42 +248,30 @@ function Occupation() {
                   )}
                 </div>
 
-                {/* 职业列表 */}
-                <div className="rounded-2xl p-5" style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid rgba(65,103,177,0.15)',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                }}>
+                <div className="rounded-2xl p-5 bg-card border border-border shadow-sm">
                   {currentPageData.length > 0 ? currentPageData.map((item, i) => (
-                    <a key={(currentPage - 1) * pageSize + i} href="#" className="flex gap-4 py-5 transition-all duration-150 block"
+                    <a key={(currentPage - 1) * pageSize + i} href="#" className="flex gap-4 py-5 transition-all duration-150 block no-underline hover:bg-primary/2"
                       style={{
-                        borderBottom: i < currentPageData.length - 1 ? '1px solid rgba(65,103,177,0.06)' : 'none',
-                        textDecoration: 'none',
-                      }}
-                      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.02)'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
-                      <div className="flex-shrink-0 rounded-xl flex flex-col items-center justify-center" style={{
-                        width: '100px',
-                        height: '80px',
-                        backgroundColor: 'rgba(65,103,177,0.06)',
+                        borderBottom: i < currentPageData.length - 1 ? '1px solid var(--border)' : 'none',
                       }}>
-                        <span style={{ fontSize: '28px' }}>{['💻', '🖥️', '📊', '📡', '💰', '📈', '🧮', '🌐', '🏗️', '🏢', '🏥', '💊', '🏛️', '⚖️', '🤝', '📚', '🧾', '📱', '🎨', '🚚', '🏨', '🌾', '🚀'][((currentPage - 1) * pageSize + i) % 23]}</span>
-                        <span className="text-xs mt-1" style={{ color: '#4167B1' }}>{item.industrymc}</span>
+                      <div className="flex-shrink-0 rounded-xl flex flex-col items-center justify-center w-[100px] h-20 bg-primary/6">
+                        <span className="text-[28px]">{['💻', '🖥️', '📊', '📡', '💰', '📈', '🧮', '🌐', '🏗️', '🏢', '🏥', '💊', '🏛️', '⚖️', '🤝', '📚', '🧾', '📱', '🎨', '🚚', '🏨', '🌾', '🚀'][((currentPage - 1) * pageSize + i) % 23]}</span>
+                        <span className="text-xs mt-1 text-primary">{item.industrymc}</span>
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-2">
                           {item.recommend && (
-                            <span className="px-2 py-0.5 text-xs rounded font-medium" style={{ color: '#ffffff', backgroundColor: '#e74c3c' }}>最新</span>
+                            <span className="px-2 py-0.5 text-xs rounded font-medium bg-red-500 text-white">最新</span>
                           )}
                           {item.hot && (
-                            <span className="px-2 py-0.5 text-xs rounded font-medium" style={{ color: '#ffffff', backgroundColor: '#f39c12' }}>最热</span>
+                            <span className="px-2 py-0.5 text-xs rounded font-medium bg-amber-500 text-white">最热</span>
                           )}
-                          <span className="text-base font-semibold" style={{ color: '#1B1F23' }}>{item.title}</span>
+                          <span className="text-base font-semibold text-foreground">{item.title}</span>
                         </div>
-                        <p className="text-sm mb-3 leading-relaxed" style={{ color: '#5a6a7a' }}>{item.desc}</p>
-                        <div className="flex items-center gap-4 text-xs" style={{ color: '#5a6a7a' }}>
+                        <p className="text-sm mb-3 leading-relaxed text-muted-foreground">{item.desc}</p>
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
                           <span className="flex items-center gap-1">
-                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#4167B1' }}>
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" strokeWidth="2">
                               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" />
                             </svg>
                             {item.collectionNum.toLocaleString()}
@@ -369,38 +286,30 @@ function Occupation() {
                       </div>
                     </a>
                   )) : (
-                    <div className="py-16 text-center" style={{ color: '#5a6a7a' }}>
-                      <svg viewBox="0 0 24 24" className="w-12 h-12 mx-auto mb-4" style={{ color: 'rgba(65,103,177,0.2)' }} fill="none" stroke="currentColor" strokeWidth="1">
+                    <div className="py-16 text-center text-muted-foreground">
+                      <svg viewBox="0 0 24 24" className="w-12 h-12 mx-auto mb-4 text-primary/20" fill="none" stroke="currentColor" strokeWidth="1">
                         <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
                       </svg>
                       <p className="text-base">输入职业关键词，开始探索吧！</p>
                     </div>
                   )}
-                  {/* 分页 */}
                   {totalPages > 1 && (
-                    <div className="flex items-center justify-center gap-2 mt-5 pt-4" style={{ borderTop: '1px solid rgba(65,103,177,0.08)' }}>
+                    <div className="flex items-center justify-center gap-2 mt-5 pt-4 border-t border-border/50">
                       <button
                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                         disabled={currentPage === 1}
-                        className="px-4 py-2 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                        style={{
-                          color: currentPage === 1 ? '#5a6a7a' : '#4167B1',
-                          backgroundColor: currentPage === 1 ? '#e3ecf7' : '#ffffff',
-                          cursor: currentPage === 1 ? 'default' : 'pointer',
-                          border: '1px solid rgba(65,103,177,0.15)',
-                        }}>
+                        className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
                         上一页
                       </button>
                       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                         <button
                           key={page}
                           onClick={() => setCurrentPage(page)}
-                          className="w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
+                          className="w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 border border-border bg-card text-foreground"
                           style={{
-                            color: page === currentPage ? '#ffffff' : '#1B1F23',
-                            backgroundColor: page === currentPage ? '#4167B1' : '#ffffff',
+                            color: page === currentPage ? 'var(--primary-foreground)' : undefined,
+                            backgroundColor: page === currentPage ? 'var(--primary)' : undefined,
                             fontWeight: page === currentPage ? '600' : '400',
-                            border: page === currentPage ? 'none' : '1px solid rgba(65,103,177,0.15)',
                           }}>
                           {page}
                         </button>
@@ -408,16 +317,10 @@ function Occupation() {
                       <button
                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                         disabled={currentPage === totalPages}
-                        className="px-4 py-2 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                        style={{
-                          color: currentPage === totalPages ? '#5a6a7a' : '#4167B1',
-                          backgroundColor: currentPage === totalPages ? '#e3ecf7' : '#ffffff',
-                          cursor: currentPage === totalPages ? 'default' : 'pointer',
-                          border: '1px solid rgba(65,103,177,0.15)',
-                        }}>
+                        className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
                         下一页
                       </button>
-                      <span className="text-sm ml-2" style={{ color: '#5a6a7a' }}>
+                      <span className="text-sm ml-2 text-muted-foreground">
                         共 {filteredData.length} 条
                       </span>
                     </div>
@@ -425,40 +328,23 @@ function Occupation() {
                 </div>
               </div>
 
-              {/* 右侧栏 */}
-              <div className="flex-shrink-0" style={{ width: '260px' }}>
-                {/* 近期上线 */}
-                <div className="rounded-2xl p-5 mb-5" style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid rgba(65,103,177,0.15)',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                }}>
-                  <h4 className="text-base font-semibold mb-4" style={{ color: '#1B1F23' }}>近期上线</h4>
+              <div className="flex-shrink-0 w-[260px]">
+                <div className="rounded-2xl p-5 mb-5 bg-card border border-border shadow-sm">
+                  <h4 className="text-base font-semibold mb-4 text-foreground">近期上线</h4>
                   <div className="flex flex-wrap gap-2">
                     {recentOccus.map((name, i) => (
-                      <a key={i} href="#" className="px-3 py-1.5 text-sm rounded-lg transition-all duration-150"
-                        style={{ color: '#4167B1', backgroundColor: 'rgba(65,103,177,0.06)', textDecoration: 'none' }}
-                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.12)'; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.06)'; }}>
+                      <a key={i} href="#" className="px-3 py-1.5 text-sm rounded-lg transition-all duration-150 text-primary bg-primary/6 no-underline hover:bg-primary/12">
                         {name}
                       </a>
                     ))}
                   </div>
                 </div>
 
-                {/* 热门职业 */}
-                <div className="rounded-2xl p-5" style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid rgba(65,103,177,0.15)',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                }}>
-                  <h4 className="text-base font-semibold mb-4" style={{ color: '#1B1F23' }}>热门职业</h4>
+                <div className="rounded-2xl p-5 bg-card border border-border shadow-sm">
+                  <h4 className="text-base font-semibold mb-4 text-foreground">热门职业</h4>
                   <div className="flex flex-wrap gap-2">
                     {hotOccus.map((name, i) => (
-                      <a key={i} href="#" className="px-3 py-1.5 text-sm rounded-lg transition-all duration-150"
-                        style={{ color: '#4167B1', backgroundColor: 'rgba(65,103,177,0.06)', textDecoration: 'none' }}
-                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.12)'; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(65,103,177,0.06)'; }}>
+                      <a key={i} href="#" className="px-3 py-1.5 text-sm rounded-lg transition-all duration-150 text-primary bg-primary/6 no-underline hover:bg-primary/12">
                         {name}
                       </a>
                     ))}
@@ -470,64 +356,7 @@ function Occupation() {
         </div>
       </div>
 
-      {/* ========== 底部页脚 ========== */}
-      <div style={{ backgroundColor: '#e3ecf7', borderTop: '1px solid rgba(65,103,177,0.12)' }}>
-        <div className="mx-auto relative" style={{ width: '1180px', height: '198px', fontSize: '14px', lineHeight: '30px' }}>
-          <div className="absolute" style={{ top: '32px', left: '0' }}>
-            {[
-              { label: '智绘职途', url: '#' },
-              { label: '版权声明', url: '#' },
-              { label: '鸣谢单位', url: '#' },
-              { label: '关于我们', url: '#' },
-              { label: '联系我们', url: '#' },
-            ].map((link, i) => (
-              <React.Fragment key={i}>
-                <a href={link.url} target="_blank" rel="noopener noreferrer"
-                  className="transition-all duration-200 text-sm" style={{ color: '#1B1F23', marginRight: '20px' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#4167B1'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = '#1B1F23'; }}>
-                  {link.label}
-                </a>
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="absolute" style={{ top: '75px', left: '0', color: '#5a6a7a', fontSize: '13px' }}>
-            主办单位：
-            <a href="#" target="_blank" rel="noopener noreferrer"
-              className="transition-all duration-200" style={{ color: '#5a6a7a' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#4167B1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#5a6a7a'; }}>
-              AI智研创新协会
-            </a>
-            <br />
-            Copyright &copy; 2003-2026 <a href="#" target="_blank" rel="noopener noreferrer"
-              className="transition-all duration-200" style={{ color: '#5a6a7a' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#4167B1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#5a6a7a'; }}>智绘职途</a> All Rights Reserved
-
-          </div>
-
-          <div className="absolute text-center" style={{ top: '42px', right: '0', color: '#1B1F23' }}>
-            <div className="flex items-center justify-center mb-2">
-              <div className="flex items-center justify-center" style={{
-                width: '72px', height: '72px', borderRadius: '12px',
-                backgroundColor: 'rgba(65,103,177,0.15)',
-              }}>
-                <div className="text-center">
-                  <svg className="w-5 h-5 mx-auto" viewBox="0 0 24 24" fill="none" style={{ color: '#4167B1' }}>
-                    <rect x="2" y="2" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                    <rect x="14" y="2" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                    <rect x="2" y="14" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                    <rect x="14" y="14" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  </svg>
-                  <span className="text-xs mt-1 block" style={{ color: '#4167B1' }}>二维码</span>
-                </div>
-              </div>
-            </div>
-            <div className="text-xs" style={{ color: '#4167B1', letterSpacing: '1px' }}>官方微信</div>
-          </div>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
