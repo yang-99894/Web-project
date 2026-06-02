@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Monitor, BarChart3, Radio, DollarSign, TrendingUp, Calculator, Globe, Building2, Building, HeartPulse, Pill, Landmark, Scale, Handshake, BookOpen, ClipboardList, Smartphone, Palette, Truck, Hotel, Leaf, Rocket, Wrench } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -56,6 +57,8 @@ const hotOccus = [
   '中学教师', '审计人员', '汽车工程技术人员',
 ];
 
+const occIcons = [Monitor, Monitor, BarChart3, Radio, DollarSign, TrendingUp, Calculator, Globe, Building2, Building, HeartPulse, Pill, Landmark, Scale, Handshake, BookOpen, ClipboardList, Smartphone, Palette, Truck, Hotel, Leaf, Rocket, Wrench];
+
 function Occupation() {
   const [hyIndex, setHyIndex] = useState(-1);
   const [kthzIndex, setKthzIndex] = useState(-1);
@@ -95,18 +98,20 @@ function Occupation() {
     setCurrentPage(1);
   };
 
-  const handleSearch = () => {
-    setCurrentPage(1);
-  };
+  const handleSearch = () => setCurrentPage(1);
+
+  const tagBtnClass = (selected) => selected
+    ? 'bg-primary text-primary-foreground'
+    : 'bg-primary/6 text-muted-foreground';
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
 
       <div className="flex-1">
-        <div className="mx-auto py-10" style={{ width: '1180px' }}>
+        <div className="mx-auto py-8" style={{ width: '1180px' }}>
 
-          <div className="mb-8 p-10 rounded-2xl text-center relative overflow-hidden bg-primary shadow-lg">
+          <div className="mb-8 p-10 rounded-2xl bg-primary shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4 text-primary-foreground">你知道自己适合什么职业了吗？</h2>
             <p className="text-base mx-auto leading-relaxed text-primary-foreground/85 max-w-[760px]">
               小职这里根据大数据为你推荐了一些与你的专业、兴趣、价值观相匹配的职业，快去探索下职位的具体内容吧！同时你也可以通过搜索职业信息库，收藏喜欢的职业来确定自己的职业目标哦！
@@ -136,8 +141,7 @@ function Occupation() {
                 <div className="grid grid-cols-2 gap-3">
                   {assessmentResult.topOccupations.map((occ, i) => (
                     <a key={i} href="#" className="flex items-start gap-3 p-4 rounded-xl transition-all duration-150 bg-primary/3 border border-border/50 no-underline hover:border-primary/25 hover:-translate-y-0.5">
-                      <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-primary-foreground"
-                        style={{ backgroundColor: i < 3 ? 'var(--primary)' : 'var(--primary)' }}>
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-primary text-primary-foreground">
                         {i + 1}
                       </span>
                       <div className="min-w-0">
@@ -195,26 +199,9 @@ function Occupation() {
                   <div className="flex items-start gap-3 mb-3">
                     <span className="text-sm font-semibold flex-shrink-0 pt-1 text-foreground">职业分类：</span>
                     <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => handleFilterChange(-1, -1)}
-                        className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                        style={{
-                          color: hyIndex === -1 ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
-                          backgroundColor: hyIndex === -1 ? 'var(--primary)' : 'var(--accent)',
-                        }}>
-                        全部
-                      </button>
+                      <button onClick={() => handleFilterChange(-1, -1)} className={`px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 ${tagBtnClass(hyIndex === -1)}`}>全部</button>
                       {industryMenu.map((hy, i) => (
-                        <button
-                          key={i}
-                          onClick={() => handleFilterChange(i, -1)}
-                          className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                          style={{
-                            color: hyIndex === i ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
-                            backgroundColor: hyIndex === i ? 'var(--primary)' : 'var(--accent)',
-                          }}>
-                          {hy.hyMc}
-                        </button>
+                        <button key={i} onClick={() => handleFilterChange(i, -1)} className={`px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 ${tagBtnClass(hyIndex === i)}`}>{hy.hyMc}</button>
                       ))}
                     </div>
                   </div>
@@ -222,26 +209,9 @@ function Occupation() {
                     <div className="flex items-start gap-3 pt-3 border-t border-border/50">
                       <span className="text-sm font-semibold flex-shrink-0 pt-1 text-foreground">职位类别：</span>
                       <div className="flex flex-wrap gap-2">
-                        <button
-                          onClick={() => { setKthzIndex(-1); setCurrentPage(1); }}
-                          className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                          style={{
-                            color: kthzIndex === -1 ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
-                            backgroundColor: kthzIndex === -1 ? 'var(--primary)' : 'var(--accent)',
-                          }}>
-                          全部
-                        </button>
+                        <button onClick={() => { setKthzIndex(-1); setCurrentPage(1); }} className={`px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 ${tagBtnClass(kthzIndex === -1)}`}>全部</button>
                         {industryMenu[hyIndex].kthzList.map((kthz, j) => (
-                          <button
-                            key={j}
-                            onClick={() => { setKthzIndex(j); setCurrentPage(1); }}
-                            className="px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150"
-                            style={{
-                              color: kthzIndex === j ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
-                              backgroundColor: kthzIndex === j ? 'var(--primary)' : 'var(--accent)',
-                            }}>
-                            {kthz}
-                          </button>
+                          <button key={j} onClick={() => { setKthzIndex(j); setCurrentPage(1); }} className={`px-3 py-1.5 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 ${tagBtnClass(kthzIndex === j)}`}>{kthz}</button>
                         ))}
                       </div>
                     </div>
@@ -249,43 +219,47 @@ function Occupation() {
                 </div>
 
                 <div className="rounded-2xl p-5 bg-card border border-border shadow-sm">
-                  {currentPageData.length > 0 ? currentPageData.map((item, i) => (
-                    <a key={(currentPage - 1) * pageSize + i} href="#" className="flex gap-4 py-5 transition-all duration-150 block no-underline hover:bg-primary/2"
-                      style={{
-                        borderBottom: i < currentPageData.length - 1 ? '1px solid var(--border)' : 'none',
-                      }}>
-                      <div className="flex-shrink-0 rounded-xl flex flex-col items-center justify-center w-[100px] h-20 bg-primary/6">
-                        <span className="text-[28px]">{['💻', '🖥️', '📊', '📡', '💰', '📈', '🧮', '🌐', '🏗️', '🏢', '🏥', '💊', '🏛️', '⚖️', '🤝', '📚', '🧾', '📱', '🎨', '🚚', '🏨', '🌾', '🚀'][((currentPage - 1) * pageSize + i) % 23]}</span>
-                        <span className="text-xs mt-1 text-primary">{item.industrymc}</span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-2">
-                          {item.recommend && (
-                            <span className="px-2 py-0.5 text-xs rounded font-medium bg-red-500 text-white">最新</span>
-                          )}
-                          {item.hot && (
-                            <span className="px-2 py-0.5 text-xs rounded font-medium bg-amber-500 text-white">最热</span>
-                          )}
-                          <span className="text-base font-semibold text-foreground">{item.title}</span>
+                  {currentPageData.length > 0 ? currentPageData.map((item, i) => {
+                    const idx = ((currentPage - 1) * pageSize + i) % occIcons.length;
+                    const Icon = occIcons[idx];
+                    return (
+                      <a key={(currentPage - 1) * pageSize + i} href="#" className="flex gap-4 py-5 transition-all duration-150 block no-underline hover:bg-primary/2"
+                        style={{
+                          borderBottom: i < currentPageData.length - 1 ? '1px solid var(--border)' : 'none',
+                        }}>
+                        <div className="flex-shrink-0 rounded-xl flex flex-col items-center justify-center w-[100px] h-20 bg-primary/6">
+                          <Icon className="w-7 h-7 text-primary" />
+                          <span className="text-xs mt-1 text-primary">{item.industrymc}</span>
                         </div>
-                        <p className="text-sm mb-3 leading-relaxed text-muted-foreground">{item.desc}</p>
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" />
-                            </svg>
-                            {item.collectionNum.toLocaleString()}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            {item.praiseNum.toLocaleString()}
-                          </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            {item.recommend && (
+                              <span className="px-2 py-0.5 text-xs rounded font-medium bg-red-500 text-white">最新</span>
+                            )}
+                            {item.hot && (
+                              <span className="px-2 py-0.5 text-xs rounded font-medium bg-amber-500 text-white">最热</span>
+                            )}
+                            <span className="text-base font-semibold text-foreground">{item.title}</span>
+                          </div>
+                          <p className="text-sm mb-3 leading-relaxed text-muted-foreground">{item.desc}</p>
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" />
+                              </svg>
+                              {item.collectionNum.toLocaleString()}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                              {item.praiseNum.toLocaleString()}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </a>
-                  )) : (
+                      </a>
+                    );
+                  }) : (
                     <div className="py-16 text-center text-muted-foreground">
                       <svg viewBox="0 0 24 24" className="w-12 h-12 mx-auto mb-4 text-primary/20" fill="none" stroke="currentColor" strokeWidth="1">
                         <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
@@ -298,14 +272,14 @@ function Occupation() {
                       <button
                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                         disabled={currentPage === 1}
-                        className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
+                        className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary hover:bg-muted disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
                         上一页
                       </button>
                       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                         <button
                           key={page}
                           onClick={() => setCurrentPage(page)}
-                          className="w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 border border-border bg-card text-foreground"
+                          className="w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 border border-border bg-card text-foreground hover:bg-muted"
                           style={{
                             color: page === currentPage ? 'var(--primary-foreground)' : undefined,
                             backgroundColor: page === currentPage ? 'var(--primary)' : undefined,
@@ -317,7 +291,7 @@ function Occupation() {
                       <button
                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                         disabled={currentPage === totalPages}
-                        className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
+                        className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary hover:bg-muted disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
                         下一页
                       </button>
                       <span className="text-sm ml-2 text-muted-foreground">
@@ -329,8 +303,10 @@ function Occupation() {
               </div>
 
               <div className="flex-shrink-0 w-[260px]">
-                <div className="rounded-2xl p-5 mb-5 bg-card border border-border shadow-sm">
-                  <h4 className="text-base font-semibold mb-4 text-foreground">近期上线</h4>
+                <div className="rounded-2xl p-5 mb-5 bg-card border border-border shadow-sm sticky top-5 self-start border-t-2 border-t-primary">
+                  <h4 className="text-base font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />近期上线
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {recentOccus.map((name, i) => (
                       <a key={i} href="#" className="px-3 py-1.5 text-sm rounded-lg transition-all duration-150 text-primary bg-primary/6 no-underline hover:bg-primary/12">
@@ -340,8 +316,10 @@ function Occupation() {
                   </div>
                 </div>
 
-                <div className="rounded-2xl p-5 bg-card border border-border shadow-sm">
-                  <h4 className="text-base font-semibold mb-4 text-foreground">热门职业</h4>
+                <div className="rounded-2xl p-5 bg-card border border-border shadow-sm sticky top-5 self-start border-t-2 border-t-amber-500" style={{ top: 'calc(var(--spacing) * 80)' }}>
+                  <h4 className="text-base font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />热门职业
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {hotOccus.map((name, i) => (
                       <a key={i} href="#" className="px-3 py-1.5 text-sm rounded-lg transition-all duration-150 text-primary bg-primary/6 no-underline hover:bg-primary/12">

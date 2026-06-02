@@ -56,10 +56,14 @@ function Home() {
       <div className="flex-1">
         <div className="mx-auto pt-10 pb-6" style={{ width: '1180px' }}>
           <div className="flex gap-8">
-            <div className="relative overflow-hidden rounded-2xl w-[750px] h-[320px] border border-border bg-card shadow-lg">
+            <div className="relative overflow-hidden rounded-2xl" style={{
+              width: '750px', height: '320px',
+              border: '1px solid var(--primary)',
+              backgroundColor: 'var(--card)',
+            }}>
               {bannerSlides.map((slide) => (
-                <div key={slide.id} className="absolute inset-0 transition-all duration-700"
-                  style={{ opacity: slide.id === activeSlide ? 1 : 0 }}>
+                <div key={slide.id}
+                  className={`absolute inset-0 transition-all duration-700 ${slide.id === activeSlide ? 'opacity-100' : 'opacity-0'}`}>
                   <img
                     src={`/images/lun${slide.id + 1}.png`}
                     alt={`banner ${slide.id + 1}`}
@@ -76,11 +80,7 @@ function Home() {
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
                 {bannerSlides.map((slide) => (
                   <button key={slide.id} onClick={() => goToSlide(slide.id)}
-                    className="rounded-full cursor-pointer border-none transition-all duration-300 h-1.5"
-                    style={{
-                      width: slide.id === activeSlide ? '32px' : '6px',
-                      backgroundColor: slide.id === activeSlide ? 'var(--primary)' : 'var(--border)',
-                    }}
+                    className={`rounded-full cursor-pointer border-none transition-all duration-300 h-1.5 ${slide.id === activeSlide ? 'w-8 bg-primary' : 'w-1.5 bg-border'}`}
                     aria-label={`切换到第 ${slide.id + 1} 张`} />
                 ))}
               </div>
@@ -158,7 +158,7 @@ function Home() {
                   <h3 className="text-lg font-bold mb-3 text-foreground group-hover:text-primary transition-colors duration-200">
                     {card.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground" style={{ lineHeight: '1.8' }}>{card.desc}</p>
+                  <p className="text-sm leading-[1.8] text-muted-foreground">{card.desc}</p>
                 </div>
               </a>
             ))}
@@ -180,7 +180,7 @@ function Home() {
             </p>
             <Link to="/survey"
               className="inline-flex items-center gap-2 text-base font-medium px-10 py-3.5 rounded-xl transition-all duration-200 bg-background text-foreground shadow-md hover:-translate-y-0.5 hover:shadow-xl no-underline">
-                开启探索之旅 <span className="text-lg inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+              开启探索之旅 <span className="text-lg inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
           </div>
         </div>

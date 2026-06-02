@@ -32,17 +32,26 @@ function Survey() {
       <Header />
 
       <div className="flex-1">
-        <div className="mx-auto py-10" style={{ width: '1180px' }}>
+        <div className="mx-auto py-10 w-[1180px]">
 
-          <div className="mb-8 p-10 rounded-2xl text-center relative overflow-hidden bg-primary shadow-lg">
-            <h2 className="text-3xl font-bold mb-4 text-primary-foreground">什么是你真正热爱的工作？</h2>
-            <p className="text-base mb-8 mx-auto leading-relaxed text-primary-foreground/85 max-w-[760px]">
-              我对什么职业感兴趣？哪种职业更适合我？我的能力能够胜任理想的工作吗？面对大家的一连串疑问，
-              学职平台联合北大、北师大、南师大心理和职业生涯规划领域教授、专家，根据专业理论和本土化特点编制了一系列测评工具，快来试试吧！
-            </p>
-            <button onClick={() => navigate('/assessment')} className="px-8 py-3 rounded-xl text-base font-medium transition-all duration-200 border-none cursor-pointer bg-white text-primary shadow-md hover:-translate-y-0.5 hover:shadow-lg">
-              进入职业测评
-            </button>
+          <div className="mb-8 rounded-2xl overflow-hidden shadow-lg flex flex-row bg-primary">
+            <div className="w-[60%] p-10 flex flex-col justify-center">
+              <h2 className="text-3xl font-bold mb-4 text-primary-foreground">什么是你真正热爱的工作？</h2>
+              <p className="text-base mb-8 leading-relaxed text-primary-foreground/85">
+                我对什么职业感兴趣？哪种职业更适合我？我的能力能够胜任理想的工作吗？面对大家的一连串疑问，
+                学职平台联合北大、北师大、南师大心理和职业生涯规划领域教授、专家，根据专业理论和本土化特点编制了一系列测评工具，快来试试吧！
+              </p>
+              <button onClick={() => navigate('/assessment')} className="self-start px-8 py-3 rounded-xl text-base font-medium transition-all duration-200 border-none cursor-pointer bg-white text-primary shadow-md hover:-translate-y-0.5 hover:shadow-lg">
+                进入职业测评
+              </button>
+            </div>
+            <div className="w-[40%] flex items-center justify-center bg-primary relative">
+              <div className="w-48 h-48 rounded-full bg-white/10 flex items-center justify-center">
+                <svg className="w-28 h-28 text-white/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                  <path d="M20 7h-7m0 0V3m0 4l-7 7m14 0v2a4 4 0 01-4 4H8a4 4 0 01-4-4v-2m16 0H4m0 0a4 4 0 014-4h1" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           <div className="mb-8 p-6 rounded-2xl bg-card border border-border shadow-sm">
@@ -55,8 +64,20 @@ function Survey() {
                 更多 <span className="text-[10px]">▶</span>
               </a>
             </div>
-            <div className="grid grid-cols-4 gap-4">
-              {bannerCards.map((card, i) => (
+
+            <a href={bannerCards[0].url} className="flex rounded-xl overflow-hidden transition-all duration-200 no-underline border border-border mb-4 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="w-[42%] h-44 flex items-center justify-center overflow-hidden bg-primary/6">
+                <img src={bannerCards[0].img} alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="flex-1 p-6 flex flex-col justify-center">
+                <span className="inline-block px-2 py-0.5 text-xs rounded-full mb-3 self-start bg-primary/10 text-primary">热门专题</span>
+                <h4 className="text-lg font-bold text-foreground mb-2">{bannerCards[0].title}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">点击查看详情 →</p>
+              </div>
+            </a>
+
+            <div className="grid grid-cols-3 gap-4">
+              {bannerCards.slice(1).map((card, i) => (
                 <a key={i} href={card.url} className="rounded-xl overflow-hidden transition-all duration-200 block border border-border no-underline hover:-translate-y-1 hover:shadow-md">
                   <div className="h-32 flex items-center justify-center overflow-hidden bg-primary/6">
                     <img src={card.img} alt="" className="w-full h-full object-cover" />
@@ -79,16 +100,16 @@ function Survey() {
                 更多 &gt;
               </a>
             </div>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+            <div className="columns-3 gap-5">
               {careerQuestions.map((item, i) => (
-                <a key={i} href="#" className="flex items-center justify-between py-3 px-3 rounded-lg transition-all duration-150 no-underline border-b border-border/50 hover:bg-primary/3">
-                  <span className="text-sm text-foreground">
-                    <span className="text-xs mr-2 font-semibold text-primary">{String(i + 1).padStart(2, '0')}</span>
+                <a key={i} href="#" className={`block py-4 px-4 rounded-lg transition-all duration-150 no-underline break-inside-avoid mb-5 hover:shadow-md ${i % 2 === 0 ? 'bg-primary/3' : 'bg-muted/30'}`}>
+                  <div className="flex items-start justify-between mb-2">
+                    <span className="px-2 py-0.5 text-xs rounded-full bg-primary/10 text-primary">{item.tag}</span>
+                    <span className="text-xs ml-2 text-muted-foreground whitespace-nowrap">{item.num}人参与</span>
+                  </div>
+                  <span className="text-sm text-foreground leading-relaxed">
+                    <span className="text-lg font-bold mr-2 text-primary">{String(i + 1).padStart(2, '0')}</span>
                     {item.q}
-                  </span>
-                  <span className="flex-shrink-0 ml-3">
-                    <span className="px-2 py-0.5 text-xs rounded-full text-muted-foreground bg-primary/6">{item.tag}</span>
-                    <span className="text-xs ml-2 text-muted-foreground">{item.num}人参与</span>
                   </span>
                 </a>
               ))}

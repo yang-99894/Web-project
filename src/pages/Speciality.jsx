@@ -108,7 +108,6 @@ const pageSize = 10;
 function Speciality() {
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
   const filteredData = useMemo(() => {
     let data = specialtyData;
     if (searchText.trim()) {
@@ -172,17 +171,14 @@ function Speciality() {
       <Header />
 
       <div className="flex-1">
-        <div className="mx-auto py-10" style={{ width: '1180px' }}>
-          <div className="mb-8">
+        <div className="mx-auto py-8 w-[1180px]">
+
+          <div className="mb-6">
             <img src="/images/dongcha.png" alt="洞察" className="w-full rounded-2xl" />
           </div>
 
-          <div className="mb-8 p-8 rounded-2xl bg-card border border-border shadow-sm">
-            <h2 className="text-2xl font-bold mb-6 text-foreground">
-              <span className="w-1 h-6 rounded-full inline-block align-middle mr-3 bg-primary" />
-              专业查询
-            </h2>
-            <div className="flex items-center gap-3">
+          <div className="mb-6 px-8 py-6 rounded-2xl bg-card border border-border shadow-md">
+            <div className="flex items-center gap-4">
               <div className="relative flex-1">
                 <input
                   type="text"
@@ -190,7 +186,7 @@ function Speciality() {
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="outline-none px-5 py-3 text-base w-full rounded-xl transition-all duration-200 border border-primary/25 text-foreground bg-background pr-[50px]"
+                  className="outline-none px-6 py-3.5 text-base w-full rounded-xl transition-all duration-200 border-2 border-primary/30 text-foreground bg-background pr-[55px]"
                 />
                 <svg
                   viewBox="0 0 20 20"
@@ -202,111 +198,108 @@ function Speciality() {
               </div>
               <button
                 onClick={handleSearch}
-                className="px-8 py-3 rounded-xl text-base font-medium transition-all duration-200 border-none cursor-pointer bg-primary text-primary-foreground shadow-md hover:-translate-y-px hover:shadow-lg">
+                className="px-10 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 border-none cursor-pointer bg-primary text-primary-foreground shadow-md hover:-translate-y-px hover:shadow-lg">
                 查询
               </button>
             </div>
-            <div className="mt-4 flex gap-2">
-              <span className="text-sm text-muted-foreground">热门搜索：</span>
+            <div className="mt-4 flex items-center gap-3">
+              <span className="text-sm font-medium text-foreground">热门搜索：</span>
               {['计算机科学与技术', '临床医学', '法学', '人工智能'].map((tag) => (
                 <button
                   key={tag}
                   onClick={() => { setSearchText(tag); setCurrentPage(1); }}
-                  className="px-3 py-1 text-sm rounded-full cursor-pointer border-none transition-all duration-150 text-primary bg-primary/6 hover:bg-primary/12">
+                  className="px-4 py-1.5 text-sm rounded-full cursor-pointer border-none transition-all duration-150 text-primary font-medium bg-primary/8 hover:bg-primary/16 hover:shadow-sm">
                   {tag}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="space-y-3">
-            {currentPageData.map((item, i) => (
-              <div
-                key={i}
-                className="flex rounded-xl p-5 transition-all duration-200 cursor-pointer bg-card border border-border shadow-sm hover:-translate-y-0.5 hover:shadow-md hover:border-primary/25">
-                <div className="flex-1 min-w-0">
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业名称</span>
-                    <a href="#" className="text-sm font-semibold text-primary hover:underline no-underline">{item.zymc}</a>
+          <div>
+            <div className="space-y-2">
+                {currentPageData.map((item, i) => (
+                  <div
+                    key={i}
+                    className={`flex rounded-xl p-5 transition-all duration-200 cursor-pointer border border-border hover:-translate-y-0.5 hover:shadow-md hover:border-primary/25 ${i % 2 === 0 ? 'bg-card' : 'bg-card/50'}`}>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业名称</span>
+                        <a href="#" className="text-sm font-semibold text-primary hover:underline no-underline">{item.zymc}</a>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业类</span>
+                        <span className="text-sm text-foreground">{item.xk}</span>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业大类</span>
+                        <span className="text-sm text-foreground">{item.mlmc}</span>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">学历层次</span>
+                        <span className="text-sm text-foreground">{item.cc}</span>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">综合满意度</span>
+                        <span>{renderStars(item.myd)}</span>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">评价人数</span>
+                        <span className="text-sm text-foreground">{item.evlNum.toLocaleString()}</span>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业评分</span>
+                        <span>{renderRating(item.pf)}</span>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">从业方向</span>
+                        <span className="text-sm text-foreground leading-relaxed">{item.cyfx}</span>
+                      </div>
+                      <div className="flex mb-2">
+                        <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">资质证书</span>
+                        <span className="text-sm text-foreground leading-relaxed">{item.zzzs}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业类</span>
-                    <span className="text-sm text-foreground">{item.xk}</span>
+                ))}
+
+                {currentPageData.length === 0 && (
+                  <div className="py-16 text-center rounded-2xl bg-card border border-border shadow-sm text-muted-foreground">
+                    <svg viewBox="0 0 24 24" className="w-12 h-12 mx-auto mb-4 text-primary/20" fill="none" stroke="currentColor" strokeWidth="1">
+                      <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+                    </svg>
+                    <p className="text-base">未找到相关专业，请尝试其他关键词</p>
                   </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业大类</span>
-                    <span className="text-sm text-foreground">{item.mlmc}</span>
-                  </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">学历层次</span>
-                    <span className="text-sm text-foreground">{item.cc}</span>
-                  </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">综合满意度</span>
-                    <span>{renderStars(item.myd)}</span>
-                  </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">评价人数</span>
-                    <span className="text-sm text-foreground">{item.evlNum.toLocaleString()}</span>
-                  </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">专业评分</span>
-                    <span>{renderRating(item.pf)}</span>
-                  </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">从业方向</span>
-                    <span className="text-sm text-foreground leading-relaxed">{item.cyfx}</span>
-                  </div>
-                  <div className="flex mb-2">
-                    <span className="text-xs font-medium flex-shrink-0 w-20 text-muted-foreground">资质证书</span>
-                    <span className="text-sm text-foreground leading-relaxed">{item.zzzs}</span>
-                  </div>
+                )}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-6">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
+                    上一页
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 border border-border ${page === currentPage ? 'bg-primary text-primary-foreground font-semibold' : 'bg-card text-foreground font-normal'}`}>
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
+                    下一页
+                  </button>
+                  <span className="text-sm ml-2 text-muted-foreground">
+                    共 {filteredData.length} 条
+                  </span>
                 </div>
-              </div>
-            ))}
-
-            {currentPageData.length === 0 && (
-              <div className="py-16 text-center rounded-2xl bg-card border border-border shadow-sm text-muted-foreground">
-                <svg viewBox="0 0 24 24" className="w-12 h-12 mx-auto mb-4 text-primary/20" fill="none" stroke="currentColor" strokeWidth="1">
-                  <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
-                </svg>
-                <p className="text-base">未找到相关专业，请尝试其他关键词</p>
-              </div>
-            )}
+              )}
           </div>
-
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 mt-6">
-              <button
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
-                上一页
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className="w-10 h-10 text-sm rounded-lg border-none cursor-pointer transition-all duration-150 font-normal border border-border bg-card text-foreground"
-                  style={{
-                    color: page === currentPage ? 'var(--primary-foreground)' : undefined,
-                    backgroundColor: page === currentPage ? 'var(--primary)' : undefined,
-                    fontWeight: page === currentPage ? '600' : '400',
-                  }}>
-                  {page}
-                </button>
-              ))}
-              <button
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 text-sm rounded-lg border border-border cursor-pointer transition-all duration-150 bg-card text-primary disabled:text-muted-foreground disabled:bg-background disabled:cursor-default">
-                下一页
-              </button>
-              <span className="text-sm ml-2 text-muted-foreground">
-                共 {filteredData.length} 条
-              </span>
-            </div>
-          )}
         </div>
       </div>
 
