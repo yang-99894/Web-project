@@ -13,7 +13,7 @@ function Footer({ simple }) {
     return (
       <div className="border-t border-border">
         <div className="mx-auto text-center py-6 text-muted-foreground text-[13px] max-w-[440px]">
-          Copyright &copy; 2003-2026 智绘职途 All Rights Reserved
+          Copyright &copy; 2026-2027 智绘职途 All Rights Reserved
         </div>
       </div>
     );
@@ -39,7 +39,7 @@ function Footer({ simple }) {
             AI智研创新协会
           </a>
           <br />
-          Copyright &copy; 2003-2026 <a href="#" target="_blank" rel="noopener noreferrer"
+          Copyright &copy; 2026-2027 <a href="#" target="_blank" rel="noopener noreferrer"
             className="text-muted-foreground hover:text-primary transition-colors duration-200">智绘职途</a> All Rights Reserved
         </div>
 

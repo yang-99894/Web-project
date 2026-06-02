@@ -152,8 +152,8 @@ function AIChat() {
         <div className="flex-1 overflow-y-auto">
           {showWelcome ? (
             <div className="flex flex-col items-center justify-center h-full px-6">
-              <div className="mb-6 w-20 h-20 rounded-2xl flex items-center justify-center bg-primary shadow-[0_8px_32px_var(--primary)]">
-                <Bot className="w-10 h-10 text-primary-foreground" />
+              <div className="mb-6 px-6 h-20 rounded-2xl flex items-center justify-center bg-primary">
+                <img src="/images/logo_aiira_en.png" alt="logo" className="h-12 w-auto brightness-0 invert" />
               </div>
               <h2 className="text-2xl font-bold mb-2">AI 简历优化助手</h2>
               <p className="text-sm mb-8 text-muted-foreground max-w-[420px] text-center leading-relaxed">

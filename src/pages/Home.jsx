@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -162,26 +162,6 @@ function Home() {
                 </div>
               </a>
             ))}
-          </div>
-        </div>
-
-        <div className="relative overflow-hidden bg-primary">
-          <div className="relative z-10 text-center py-24 px-4 max-w-[800px] mx-auto">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <span className="w-6 h-px bg-foreground/30" />
-              <span className="text-xs tracking-[3px] text-foreground/60">CAREER</span>
-              <span className="w-6 h-px bg-foreground/30" />
-            </div>
-            <h2 className="text-3xl font-bold mb-5 text-primary-foreground tracking-[1px]">
-              职业测评为你真正了解自己打开一扇窗口
-            </h2>
-            <p className="text-sm leading-relaxed mb-10 text-primary-foreground/70">
-              所谓"知己知彼，百战不殆"，只有在充分了解自己和对方的基础上，才能做出明晰的判断和正确的选择，利用专业的测量工具，职业测评为你真正了解自己打开一扇窗口，向着亮光的地方，来遇见未知的自己吧。
-            </p>
-            <Link to="/survey"
-              className="inline-flex items-center gap-2 text-base font-medium px-10 py-3.5 rounded-xl transition-all duration-200 bg-background text-foreground shadow-md hover:-translate-y-0.5 hover:shadow-xl no-underline">
-              开启探索之旅 <span className="text-lg inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </Link>
           </div>
         </div>
       </div>
